@@ -34,7 +34,7 @@ const App = () => {
   const goldItems = useMemo(() => {
     if (!productList) return {};
     return Object.fromEntries(
-      Object.entries(productList).filter(([_, value]) => value.Type === "Gold")
+      Object.entries(productList).filter(([_, value]) => value?.Type === "Gold")
     );
   }, [productList]);
 
@@ -48,12 +48,12 @@ const App = () => {
   }, [form, goldItems]);
 
   const calculateTotals = (values: Record<string, number>) => {
-    let newIndividualTotals: Record<string, number> = {};
+    const newIndividualTotals: Record<string, number> = {};
     let generalTotal = 0;
 
     for (const [key, item] of Object.entries(goldItems)) {
       const quantity = values[key] || 0;
-      const itemTotal = quantity * item.Selling;
+      const itemTotal = quantity * item?.Selling;
       newIndividualTotals[key] = Number(itemTotal.toFixed(2));
       generalTotal += itemTotal;
     }
@@ -72,8 +72,8 @@ const App = () => {
       {/* SOL: Form */}
       <div style={{ width: "60%", paddingRight: 24 }}>
         <Form form={form} layout="vertical" onValuesChange={handleValuesChange}>
-          {Object.entries(goldItems).map(([key, item]) => (
-            <Form.Item key={key} label={item.Name}>
+          {Object.entries(goldItems)?.map(([key, item]) => (
+            <Form.Item key={key} label={item?.Name}>
               <Row gutter={16} align="middle">
                 <Col span={12}>
                   <Form.Item name={key} noStyle>
@@ -89,7 +89,7 @@ const App = () => {
                     {individualTotals[key]
                       ? `${formatCurrency(individualTotals[key])}`
                       : "0 ₺"}{" "}
-                    ({formatCurrency(item.Selling)} ₺/birim)
+                    ({formatCurrency(item?.Selling)} ₺/birim)
                   </span>
                 </Col>
               </Row>

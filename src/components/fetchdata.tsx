@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { filterGoldItems } from "../utils/utils";
 import React from "react";
+import { DataItem } from "../App";
 
 export const useFetchData = () => {
-  const [productList, setProductList] = React.useState(null);
+  const [productList, setProductList] = React.useState<DataItem | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
